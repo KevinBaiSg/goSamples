@@ -6,7 +6,6 @@ import (
 	"github.com/coreos/etcd/client"
 	"log"
 	_ "net/http"
-	"time"
 )
 
 func main() {
