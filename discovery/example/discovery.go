@@ -23,8 +23,10 @@ func main() {
 		master, _ := discovery.NewMaster(endpoints, "services/")
 		master.WatchNodes()
 	} else if *role == "worker" {
+
 		serverName := "localhost"
 		ip := "127.0.0.1"
+
 		workerInfo := discovery.WorkerInfo{
 			Name: serverName,
 			IP: ip,
