@@ -1,5 +1,5 @@
 # etcd client v3
-Fabric 1.4 开始使用 etcd 代替 kafka 来实现排序服务，案例中作为学习 etcd 使用
+Fabric 1.4 增加了 raft 协议来实现区块排序服务，并且使用了 etcd v3 版本的实现。
 
 ### TODO
 * PUT DELETE

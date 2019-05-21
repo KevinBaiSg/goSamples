@@ -1,14 +1,21 @@
 package common
 
-import "github.com/coreos/etcd/client"
+import (
+	"github.com/coreos/etcd/clientv3"
+)
 
-func NewClient() (client.Client, error)  {
-	cfg := client.Config{
-		Endpoints: []string{"http://127.0.0.1:2379"},
-		Transport: client.DefaultTransport,
+func NewClient() (*clientv3.Client, error)  {
+	endpoints := []string{
+		"http://127.0.0.1:2379",
+		"http://127.0.0.1:22379",
+		"http://127.0.0.1:32379",
 	}
 
-	c, err := client.New(cfg)
+	cfg := clientv3.Config{
+		Endpoints: endpoints,
+	}
+
+	c, err := clientv3.New(cfg)
 	if err != nil {
 		return nil, err
 	}
