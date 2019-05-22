@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/KevinBaiSg/etcdSample/common"
+	"github.com/KevinBaiSg/goSamples/etcd/common"
 	"github.com/coreos/etcd/clientv3"
 	"log"
 	"strconv"

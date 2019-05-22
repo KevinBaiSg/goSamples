@@ -1,4 +1,4 @@
-module github.com/KevinBaiSg/etcdSample
+module github.com/KevinBaiSg/goSamples/etcd
 
 go 1.12
 

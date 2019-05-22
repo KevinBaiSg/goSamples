@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/KevinBaiSg/etcdSample/discovery"
+	"github.com/KevinBaiSg/goSamples/etcd/discovery"
 	"runtime"
 	"time"
 )

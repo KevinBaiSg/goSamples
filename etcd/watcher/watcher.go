@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/KevinBaiSg/etcdSample/common"
+	"github.com/KevinBaiSg/goSamples/etcd/common"
 	"github.com/coreos/etcd/client"
 	"log"
 )
