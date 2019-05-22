@@ -7,6 +7,7 @@ Fabric 1.4 增加了 raft 协议来实现区块排序服务，并且使用了 et
 * 事务
 * 服务发现
 * 分布式锁
+* Raft 协议解读
 
 ### Running a local etcd cluster
 First install goreman, which manages Procfile-based applications.
