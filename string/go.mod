@@ -1,3 +1,3 @@
-module github.com/KevinBaiSg/goSamples/etcd/string
+module github.com/KevinBaiSg/goSamples/string
 
 go 1.12
