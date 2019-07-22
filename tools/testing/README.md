@@ -55,16 +55,19 @@ for _, c := range cases {
 }
 ```
 
-#### 1.2.2 常见的测试日志输出对比
-|   API    |  case失败 | case 中断 |  测试中断  |  说明    |
-|:--------:|:--------:|:--------:|:--------:|
-| Fail | 是 | 否 |  |
-| FailNow | 失败 | 是 |
-| SkipNow |  |  |
-| Skip/Skipf |  |  |
-| Log/Logf |  |  |
-| Error/Error |  |  |
-| Fatal/Fatalf |  |  |
+#### 1.2.2 常见的测试日志输出对比  
+
+带 f 的是格式化的，格式化语法参考 fmt 包    
+
+|    API   | case 是否失败 | case 是否中断 | 说明 |
+|----------|:-------------:|:------:|:------:|
+| Fail | 是 | 否 | | 
+| FailNow | 是 | 是 | 内部通过调用 Goexit 中断测试 |
+| SkipNow | 是 | 是 | 只跳过测试，不标识错误，内部通过调用 Goexit 中断测试 |
+| Log/Logf | 是 | 否 | 输出信息/输出格式化的信息 |
+| Skip/Skipf | 是 | 是 | Log/Logf + SkipNow |
+| Error/Error | 是 | 否 | Log/Logf + Fail |
+| Fatal/Fatalf | 是 | 否 | Log/Logf + FailNow |
 
 ### 1.3 基准测试
 本例中的基准测试：    
@@ -91,7 +94,7 @@ PASS
 ok      github.com/KevinBaiSg/goSamples/tools/testing   2.184s
 ```
 测试结果说明
-BenchmarkZigZagConversion-8： 中的 8 代表 CPU 个数
+BenchmarkZigZagConversion-8： 中的 8 最大 P 数量为8。
 2000000： 代表测试次数
 720 ns/op： 代表 720 ns 每 loop
 
@@ -280,7 +283,7 @@ $go tool cover -html=c.out -o=tag.html
 ## Reference：  
 [1. Package testing](https://golang.org/pkg/testing/)  
 [2. Go 语言的几种测试方法](https://blog.csdn.net/lastsweetop/article/details/78469507?utm_campaign=studygolang.com&utm_medium=studygolang.com&utm_source=studygolang.com)  
-[3. 测试的基本规则和流程-极客时间](https://time.geekbang.org/column/article/41036)  
-[4. Go 测试，go test 工具的具体指令 flag](https://deepzz.com/post/the-command-flag-of-go-test.html)
-[5. Go 语言中文网](https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter09/09.2.html)
-[Go 测试，go test 工具的具体指令 flag](https://deepzz.com/post/the-command-flag-of-go-test.html)
+[3. 测试的基本规则和流程-极客时间](https://time.geekbang.org/column/article/41036)      
+[4. Go 测试，go test 工具的具体指令 flag](https://deepzz.com/post/the-command-flag-of-go-test.html)   
+[5. Go 语言中文网](https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter09/09.2.html)  
+[6. Go 测试，go test 工具的具体指令 flag](https://deepzz.com/post/the-command-flag-of-go-test.html)  
