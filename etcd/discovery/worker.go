@@ -3,10 +3,10 @@ package discovery
 import (
 	"encoding/json"
 	"errors"
-	"github.com/coreos/etcd/clientv3"
 	"log"
-	"time"
 
+	. "github.com/KevinBaiSg/goSamples/etcd/common"
+	"github.com/coreos/etcd/clientv3"
 	"golang.org/x/net/context"
 )
 
@@ -25,12 +25,8 @@ type Worker struct {
 	client		*clientv3.Client
 }
 
-func NewWorker(name string, info WorkerInfo, endpoints []string) (*Worker, error) {
-	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:	endpoints,
-		DialTimeout: 2 * time.Second,
-	})
-
+func NewWorker(name string, info WorkerInfo) (*Worker, error) {
+	client, err := NewClient()
 	if err != nil {
 		log.Fatal("Error: cannot new worker client:", err)
 		return nil, err
@@ -40,7 +36,7 @@ func NewWorker(name string, info WorkerInfo, endpoints []string) (*Worker, error
 		Name:		name,
 		Info:		info,
 		stop:		make (chan error),
-		client: 	cli,
+		client: 	client,
 	}, err
 }
 

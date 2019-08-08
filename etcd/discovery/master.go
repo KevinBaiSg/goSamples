@@ -2,11 +2,12 @@ package discovery
 
 import (
 	"encoding/json"
-	"github.com/coreos/etcd/clientv3"
 	"log"
-	"time"
 
+	"github.com/coreos/etcd/clientv3"
 	"golang.org/x/net/context"
+
+	. "github.com/KevinBaiSg/goSamples/etcd/common"
 )
 
 type Master struct {
@@ -22,12 +23,8 @@ type Node struct {
 	Info    WorkerInfo
 }
 
-func NewMaster(endpoints []string, watchPath string) (*Master,error) {
-	client, err := clientv3.New(clientv3.Config{
-		Endpoints:	endpoints,
-		DialTimeout: time.Second,
-	})
-
+func NewMaster(watchPath string) (*Master,error) {
+	client, err := NewClient()
 	if err != nil {
 		log.Fatal("Error: cannot new master client:", err)
 		return nil, err

@@ -3,9 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/KevinBaiSg/goSamples/etcd/discovery"
+	"log"
+	"path/filepath"
 	"runtime"
 	"time"
+
+	"github.com/KevinBaiSg/goSamples/etcd/discovery"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -13,14 +17,15 @@ func main() {
 
 	flag.Parse()
 
-	endpoints := []string{
-		"http://127.0.0.1:2379",
-		"http://127.0.0.1:22379",
-		"http://127.0.0.1:32379",
+	dir, err := filepath.Abs("./")
+	if err != nil {
+		log.Fatal("filepath directory error ", err)
+		return
 	}
+	viper.AddConfigPath(dir)
 
 	if *role == "master" {
-		master, _ := discovery.NewMaster(endpoints, "services/")
+		master, _ := discovery.NewMaster("services/")
 		master.WatchNodes()
 	} else if *role == "worker" {
 
@@ -32,7 +37,7 @@ func main() {
 			IP: ip,
 			CPU: runtime.NumCPU(),
 		}
-		worker, _ := discovery.NewWorker(serverName, workerInfo, endpoints)
+		worker, _ := discovery.NewWorker(serverName, workerInfo)
 
 		go func() {
 			time.Sleep(time.Second*20)
