@@ -2,14 +2,17 @@ package common
 
 import (
 	"github.com/coreos/etcd/clientv3"
+	"github.com/spf13/viper"
 )
 
 func NewClient() (*clientv3.Client, error)  {
-	endpoints := []string{
-		"http://127.0.0.1:2379",
-		"http://127.0.0.1:22379",
-		"http://127.0.0.1:32379",
+	viper.SetConfigFile("./config.yaml")
+	err := viper.ReadInConfig()
+	if err != nil {
+		return nil, err
 	}
+
+	endpoints := viper.GetStringSlice("endpoints")
 
 	cfg := clientv3.Config{
 		Endpoints: endpoints,
