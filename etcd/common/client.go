@@ -6,7 +6,7 @@ import (
 )
 
 func NewClient() (*clientv3.Client, error)  {
-	viper.SetConfigFile("./config.yaml")
+	viper.SetConfigName("config")
 	err := viper.ReadInConfig()
 	if err != nil {
 		return nil, err
