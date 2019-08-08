@@ -2,35 +2,39 @@ package main
 
 import (
 	"context"
-	"github.com/KevinBaiSg/goSamples/etcd/common"
-	"github.com/coreos/etcd/client"
 	"log"
+	"path/filepath"
+
+	. "github.com/KevinBaiSg/goSamples/etcd/common"
+	"github.com/coreos/etcd/clientv3"
+	"github.com/spf13/viper"
 )
 
 func main() {
-	c, err := common.NewClient()
+	dir, err := filepath.Abs("./")
+	if err != nil {
+		log.Fatal("filepath directory error ", err)
+		return
+	}
+	viper.AddConfigPath(dir)
+
+	c, err := NewClient()
 	if err != nil {
 		log.Fatal("Error: NewClient Failed:", err)
 		return
 	}
 
-	kAPI := client.NewKeysAPI(c)
+	watcher := clientv3.NewWatcher(c)
 	ctx := context.Background()
 
-	watcher := kAPI.Watcher("/foo", &client.WatcherOptions{
-		Recursive: true,
-	})
+	log.Printf("start watch")
+
 	for {
-		res, err := watcher.Next(ctx)
-		if err != nil {
-			log.Println("Error watch workers:", err)
-			break
-		}
-		switch res.Action {
-		case "expire":
-			log.Println("Watcher Next Action: ", res.Action)
-		case "get", "set", "delete", "update", "create", "compareAndSwap", "compareAndDelete":
-			log.Printf("Watcher Next Action: %s; Value: %v", res.Action, res.Node.Value)
+		watchChans := watcher.Watch(ctx, "/events", clientv3.WithPrefix())
+		for watch := range watchChans {
+			for _, event := range watch.Events {
+				log.Printf("Watch: %s %q: %q \n", event.Type, event.Kv.Key, event.Kv.Value)
+			}
 		}
 	}
 }

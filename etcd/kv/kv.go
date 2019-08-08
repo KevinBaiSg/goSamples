@@ -19,13 +19,6 @@ func main() {
 	}
 	viper.AddConfigPath(dir)
 
-	dir, err = filepath.Abs("./")
-	if err != nil {
-		log.Fatal("filepath directory error: ", err)
-		return
-	}
-	viper.AddConfigPath(dir)
-
 	c, err := NewClient()
 	if err != nil {
 		log.Fatal("Error: NewClient Failed: ", err)

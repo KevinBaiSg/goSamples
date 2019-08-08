@@ -1,6 +1,8 @@
 package common
 
 import (
+	"time"
+
 	"github.com/coreos/etcd/clientv3"
 	"github.com/spf13/viper"
 )
@@ -16,6 +18,7 @@ func NewClient() (*clientv3.Client, error)  {
 
 	cfg := clientv3.Config{
 		Endpoints: endpoints,
+		DialTimeout: time.Second * 30,
 	}
 
 	c, err := clientv3.New(cfg)
