@@ -15,10 +15,14 @@ func NewClient() (*clientv3.Client, error)  {
 	}
 
 	endpoints := viper.GetStringSlice("endpoints")
+	user := viper.GetString("user")
+	password := viper.GetString("password")
 
 	cfg := clientv3.Config{
 		Endpoints: endpoints,
 		DialTimeout: time.Second * 30,
+		Username: user,
+		Password: password,
 	}
 
 	c, err := clientv3.New(cfg)

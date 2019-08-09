@@ -15,10 +15,13 @@ func TestNewClient(t *testing.T) {
 	}
 	viper.AddConfigPath(dir)
 
-	if _, err := NewClient(); err != nil {
+	c, err := NewClient()
+	if err != nil {
 		t.Errorf("new client error %e", err)
 		return
 	}
+	c.Close()
+
 	t.Logf("new client success")
 }
 
