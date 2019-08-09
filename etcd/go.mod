@@ -3,6 +3,7 @@ module github.com/KevinBaiSg/goSamples/etcd
 go 1.12
 
 require (
+	github.com/Rhymond/go-money v0.4.0
 	github.com/coreos/etcd v3.3.13+incompatible
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/json-iterator/go v1.1.6 // indirect
