@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	dir, err := filepath.Abs("./common")
+	dir, err := filepath.Abs("./")
 	if err != nil {
 		log.Fatal("filepath directory error ", err)
 		return
