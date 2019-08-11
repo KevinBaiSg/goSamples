@@ -2,7 +2,7 @@
 Fabric 1.4 增加了 raft 协议来实现区块排序服务，并且使用了 etcd v3 版本的实现。
 
 ### TODO
-* PUT DELETE
+* ADD PUT DELETE
 * WATCH
 * 事务
 * 服务发现
