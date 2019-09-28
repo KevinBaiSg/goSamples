@@ -3,6 +3,7 @@
 在高并发的情况下任何东西的生成和销毁都会影响到最终的性能，由于 Go 使用了 GC 的方式进行内存管理，用过的对象会被销毁掉。为了能够重用对象，Go 为我们提供了 sync.Pool 这个工具。
 
 ## 使用方法
+
 ```go
 func main()  {
 	myPool := &sync.Pool{New: func() interface{} {
@@ -33,9 +34,11 @@ func main()  {
 2019/09/28 16:30:12 Creating new instance
 2019/09/28 16:30:12 instance =  0
 ```
+
 也就是说我们 put 进去的 instance 被销毁了，是调用我们定义 Pool 时的 New 方法重新产生的。在平时我们不用调用 runtime.GC()，go 的 GC 也会做同样的事情，所以 sync.Pool 是不能够当线程池来使用的。
 
 既然是介绍 sync.Pool 当然要先说说它的好处
+
 ```go
 func TestPool(t *testing.T)  {
 	var numCalcsCreated int
@@ -67,7 +70,9 @@ func TestPool(t *testing.T)  {
 	t.Log(numCalcsCreated, "calculators were created")
 }
 ```
+
 这段代码是 《Concurrency in Go》 中的一个示例，运行这段代码可以发现最后的计算结果还是很感动的, 值有8次 create。
+
 ```
 === RUN   TestPool
 --- PASS: TestPool (0.28s)
@@ -105,7 +110,7 @@ type poolLocal struct {
 ```
 
 > poolLocalInternal 定义了两个值:
->> *private* 用于保存 P 私有的值
+>> *private* 用于保存 P 私有的值		
 >> *shared* 用于保存 shared 的值，Local P 可以通过 pushHead/popHead 获取，其他 P 可以通过 popTail获取，但是这两种获取都需要加锁。
 
 - 两个接口
