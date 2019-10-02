@@ -1,5 +1,3 @@
-select-channel 模板
-
 # select-channel 模板
 
 说起 Go 的语言特性必然会提到其高并发的的特性，以及 channel 和 select，下面就总结几个《Concurrency in Go》中提到的模板。
