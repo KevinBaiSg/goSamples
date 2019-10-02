@@ -13,7 +13,7 @@ import (
 
 func main() {
 	const max_thread = 10
-	const root = "/Users/kevin/working/myleetcode"
+	const root = "/"
 	var wg sync.WaitGroup
 
 	ctx, _ := context.WithTimeout(context.Background(), time.Second)
