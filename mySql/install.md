@@ -1,5 +1,5 @@
 # 环境
-Debian 9 + 10.1.41-MariaDB
+Debian 9 + 10.4.8-MariaDB
 
 # Q&A
 ## 设置 root password
@@ -8,7 +8,7 @@ Debian 9 + 10.1.41-MariaDB
 $sudo mysql -u root
 
 mysql> use mysql;
-​mysql> update user set authentication_string=password('your_username') where user='root';
+​mysql> set password = password("your_username"); 
 ​mysql> flush privileges;
 ​mysql> quit
 ```
@@ -24,12 +24,11 @@ mysql> FLUSH PRIVILEGES; // 刷新权限
 
 ### 修改 bind address 
 
-查看文件 `/etc/mysql/mariadb.conf.d/50-server.cnf` 并修改
+查看文件 `/etc/mysql/my.cnf` 并保证打开 `bind-address=0.0.0.0`
 
 ```shell script
-# By default we only accept connections from localhost
-- bind-address    = 127.0.0.1
-+ bind-address    = 0.0.0.0
+# Allow server to accept connections on all interfaces.
+bind-address=0.0.0.0
 ```
 
 ## java.io.EOFException: unexpected end of stream, read 0 bytes from 4 (socket was closed by server).

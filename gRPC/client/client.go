@@ -2,31 +2,60 @@ package main
 
 import (
 	"context"
-	"log"
-	"os"
+	"io"
 
 	pb "github.com/KevinBaiSg/goSamples/grpc/proto"
-	"google.golang.org/grpc"
+	log "github.com/sirupsen/logrus"
 )
 
-func main()  {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+const (
+	target = "localhost:50051"
+)
+
+func main() {
+	log.WithFields(log.Fields{
+		"start": "main",
+	}).Info("client start")
+
+	// conn, err := grpc.Dial(target, grpc.WithInsecure())
+	// if err != nil {
+	// 	log.Fatal("connect server failed")
+	// }
+	conn, err := GetConn(target)
 	if err != nil {
 		log.Fatal("connect server failed")
 	}
 	defer conn.Close()
 
-	name := "hello"
-	c := pb.NewGreeterClient(conn)
+	log.Info("create a connect client successful")
 
-	if len(os.Args) > 1 {
-		name = os.Args[1]
+	c := pb.NewRouteClient(conn)
+	log.Info("new route client successfully")
+
+	context := context.TODO()
+
+	log.Info("start call GetFeature")
+	feature, e := c.GetFeature(context, &pb.Point{
+		Latitude:  409146138,
+		Longitude: -746188906,
+	})
+	if e != nil {
+		log.WithError(e)
+		return
 	}
 
-	r, err := c.SayHello(context.Background(), &pb.HelloRequest{Name: name})
-	if err != nil {
-		log.Fatal("SayHello failed")
-	}
+	log.Info(feature)
 
-	log.Println(r.Message)
+	for {
+		feature, e := c.ListFeatures(context, &pb.Rectangle{})
+		if e == io.EOF {
+			log.Info("ListFeatures finish")
+			break
+		}
+		if e != nil {
+			log.WithError(e)
+			return
+		}
+		log.Info(feature)
+	}
 }

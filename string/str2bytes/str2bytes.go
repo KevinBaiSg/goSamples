@@ -1,13 +1,17 @@
 package str2bytes
 
 import (
+	"reflect"
 	"unsafe"
 )
 
-func str2bytes(s string) []byte {
-	x := (*[2]uintptr)(unsafe.Pointer(&s))
-	b := [3]uintptr{x[0], x[1], x[1]}
-	return *(*[]byte)(unsafe.Pointer(&b))
+func str2bytes(s string) (b []byte) {
+	sh := *(*reflect.StringHeader)(unsafe.Pointer(&s))
+	bh := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+	bh.Cap = sh.Len
+	bh.Len = sh.Len
+	bh.Data = sh.Data
+	return b
 }
 
 func bytes2str(b []byte) string {

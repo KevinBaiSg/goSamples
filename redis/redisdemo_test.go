@@ -3,7 +3,6 @@ package redis
 import (
 	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/go-redis/redis"
 	"github.com/spf13/viper"
@@ -12,32 +11,24 @@ import (
 var redisdb *redis.Client
 
 func init() {
-	redisdb = redis.NewClient(&redis.Options{
-		Addr:         ":6379",
-		DialTimeout:  10 * time.Second,
-		ReadTimeout:  30 * time.Second,
-		WriteTimeout: 30 * time.Second,
-		PoolSize:     10,
-		PoolTimeout:  30 * time.Second,
-	})
-}
-
-func ExampleNewClient() {
 	viper.AddConfigPath(".")
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(fmt.Errorf("error: %s \n", err))
 	}
 
-	url := viper.GetString("environments.url")
-	port := viper.GetInt("environments.port")
-	password := viper.GetString("environments.password")
+	url 		:= viper.GetString("environments.url")
+	port 		:= viper.GetInt("environments.port")
+	password 	:= viper.GetString("environments.password")
 
 	redisdb = redis.NewClient(&redis.Options{
 		Addr:     url + ":" + strconv.Itoa(port),
 		Password: password,
 		DB:       0,
 	})
+}
+
+func ExampleNewClient() {
 	pong, err := redisdb.Ping().Result()
 	fmt.Println(pong, err)
 	// Output: PONG <nil>

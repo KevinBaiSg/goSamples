@@ -1,5 +1,7 @@
 package testing
 
+import "strings"
+
 func convert(s string, numRows int) string {
 	if len(s) == 0 || numRows == 0 { return "" }
 	if numRows == 1 { return s }
@@ -10,7 +12,7 @@ func convert(s string, numRows int) string {
 		nextIsDown = true
 		zigZag = ""
 	)
-
+	strings.Split()
 	for _, c := range s {
 		rows[curRow] = append(rows[curRow], c)
 		if nextIsDown {

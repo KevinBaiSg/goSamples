@@ -64,7 +64,7 @@ for _, c := range cases {
 | Fail | 是 | 否 | | 
 | FailNow | 是 | 是 | 内部通过调用 Goexit 中断测试 |
 | SkipNow | 是 | 是 | 只跳过测试，不标识错误，内部通过调用 Goexit 中断测试 |
-| Log/Logf | 是 | 否 | 输出信息/输出格式化的信息 |
+| Log/Logf | 否 | 否 | 输出信息/输出格式化的信息 |
 | Skip/Skipf | 是 | 是 | Log/Logf + SkipNow |
 | Error/Error | 是 | 否 | Log/Logf + Fail |
 | Fatal/Fatalf | 是 | 否 | Log/Logf + FailNow |

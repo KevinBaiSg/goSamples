@@ -13,8 +13,8 @@ func testString()  {
 }
 
 func testStr2bytes() {
-	b := str2bytes(s)
-	_ = bytes2str(b)
+	_ = str2bytes2(s)
+	// _ = bytes2str(b)
 }
 
 func BenchmarkTest(b *testing.B)  {

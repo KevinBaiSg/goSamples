@@ -26,6 +26,7 @@ func main() {
 		return
 	}
 
+	// get url dbname user and password from config.ymal
 	url 		:= viper.GetString("url")
 	dbname 		:= viper.GetString("dbname")
 	user 		:= viper.GetString("user")
